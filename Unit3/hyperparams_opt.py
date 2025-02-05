@@ -551,7 +551,7 @@ def sample_MODdqn_params(trial: optuna.Trial, n_actions: int, n_envs: int, addit
     exploration_final_eps = 0.01
     exploration_fraction = 0.1
     target_update_interval = 1000
-    learning_starts = trial.suggest_categorical("learning_starts", [0, 1000, 5000, 10000, 20000])
+    learning_starts = 100000
 
     train_freq = 4
     subsample_steps = trial.suggest_categorical("subsample_steps", [1, 2, 4, 8])
