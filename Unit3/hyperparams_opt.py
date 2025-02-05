@@ -544,18 +544,18 @@ def sample_MODdqn_params(trial: optuna.Trial, n_actions: int, n_envs: int, addit
     :param trial:
     :return:
     """
-    gamma = trial.suggest_categorical("gamma", [0.95, 0.95, 0.98, 0.99])
+    gamma = 0.99
     learning_rate = trial.suggest_float("learning_rate", 1e-5, 1e-3, log=True)
     batch_size = trial.suggest_categorical("batch_size", [16, 32, 64, 100, 128])#bound
     buffer_size = trial.suggest_categorical("buffer_size", [int(1e4), int(5e4), int(1e5), int(1e6)])
-    exploration_final_eps = trial.suggest_float("exploration_final_eps", 0, 0.2)
-    exploration_fraction = trial.suggest_float("exploration_fraction", 0, 0.5)
-    target_update_interval = trial.suggest_categorical("target_update_interval", [1, 1000, 5000, 10000, 15000, 20000])
+    exploration_final_eps = 0.01
+    exploration_fraction = 0.1
+    target_update_interval = 1000
     learning_starts = trial.suggest_categorical("learning_starts", [0, 1000, 5000, 10000, 20000])
 
-    train_freq = trial.suggest_categorical("train_freq", [1, 4, 8, 16, 128, 256, 1000])
+    train_freq = 4
     subsample_steps = trial.suggest_categorical("subsample_steps", [1, 2, 4, 8])
-    gradient_steps = max(train_freq // subsample_steps, 1)
+    gradient_steps = 1
 
     net_arch_type = trial.suggest_categorical("net_arch", ["tiny", "small", "medium"])
 
