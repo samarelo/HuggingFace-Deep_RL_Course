@@ -546,7 +546,7 @@ def sample_MODdqn_params(trial: optuna.Trial, n_actions: int, n_envs: int, addit
     """
     gamma = 0.99
     learning_rate = trial.suggest_float("learning_rate", 1e-5, 1e-3, log=True)
-    batch_size = trial.suggest_categorical("batch_size", [16, 32, 64, 100, 128])#bound
+    batch_size = trial.suggest_categorical("batch_size", [16, 32, 64, 100, 128])
     buffer_size = trial.suggest_categorical("buffer_size", [int(1e4), int(5e4), int(1e5), int(1e6)])
     exploration_final_eps = 0.01
     exploration_fraction = 0.1
@@ -554,12 +554,12 @@ def sample_MODdqn_params(trial: optuna.Trial, n_actions: int, n_envs: int, addit
     learning_starts = 100000
 
     train_freq = 4
-    subsample_steps = trial.suggest_categorical("subsample_steps", [1, 2, 4, 8])
     gradient_steps = 1
 
-    net_arch_type = trial.suggest_categorical("net_arch", ["tiny", "small", "medium"])
-
-    net_arch = {"tiny": [64], "small": [64, 64], "medium": [256, 256]}[net_arch_type]
+# ignore the following hyperparams as they can just be null by default for SpaceInvaders
+#    net_arch_type = trial.suggest_categorical("net_arch", ["tiny", "small", "medium"])
+#    net_arch = {"tiny": [64], "small": [64, 64], "medium": [256, 256]}[net_arch_type]
+#    subsample_steps = trial.suggest_categorical("subsample_steps", [1, 2, 4, 8])
 
     hyperparams = {
         "gamma": gamma,
@@ -572,7 +572,7 @@ def sample_MODdqn_params(trial: optuna.Trial, n_actions: int, n_envs: int, addit
         "exploration_final_eps": exploration_final_eps,
         "target_update_interval": target_update_interval,
         "learning_starts": learning_starts,
-        "policy_kwargs": dict(net_arch=net_arch),
+#        "policy_kwargs": dict(net_arch=net_arch),
     }
 
     if additional_args["using_her_replay_buffer"]:
